@@ -1,0 +1,34 @@
+*{
+    font-family: 'Rubik', sans-serif;
+}
+
+.hero_image{
+    background-image: url("https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1400");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    background-attachment: fixed; /*scroll*/
+    background-clip: border-box; /** this is the default **/
+    height: 600px;
+}
+
+.avatar{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    box-shadow: rgba(43, 42, 42,0.4) 0px 1px 10px;
+}
+
+.avatar_img{
+    height: 100%;
+    width: 100%;
+}
+
+.cost-head{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.cost-head a{
+    margin-left:80px;
+}
