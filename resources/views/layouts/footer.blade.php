@@ -1,37 +1,30 @@
 <!-- Footer container -->
-<footer
-  class=" bg-neutral-100 mt-4 text-center dark:bg-neutral-600 lg:text-left">
-  <div class="container p-6">
-    <div class="flex items-center justify-around">
-      <!--First links section-->
-      <div class="mb-6">
-        <h5
-          class="mb-2.5 font-bold uppercase text-neutral-800 dark:text-neutral-200">
-          Recent Posts
-        </h5>
 
-        <ul class="mb-0 list-none">
-          <li>
-            <a href="#!" class="text-neutral-800 dark:text-neutral-200"
-              >Link 1</a
-            >
-          </li>
-          <li>
-            <a href="#!" class="text-neutral-800 dark:text-neutral-200"
-              >Link 2</a
-            >
-          </li>
-          <li>
-            <a href="#!" class="text-neutral-800 dark:text-neutral-200"
-              >Link 3</a
-            >
-          </li>
-          <li>
-            <a href="#!" class="text-neutral-800 dark:text-neutral-200"
-              >Link 4</a
-            >
-          </li>
-        </ul>
+<footer
+  class="px-8 bg-neutral-100 mt-4 text-center dark:bg-neutral-600 lg:text-left">
+  <div class="container">
+    <div class="flex items-start py-8 justify-around">
+      <!--First links section-->
+      <div class="mb-6 w-1/2">
+        @if(isset($recent))
+          <h5
+            class="mb-2.5 font-bold uppercase text-neutral-800 dark:text-neutral-200">
+            Recent Posts
+          </h5>
+        @endif
+        @if(isset($recent) && count($recent) >0)
+          <div class="footer-posts container w-1/2">
+              @foreach($recent as $post)
+                <div class="bg-gray-200 py-2 footer-post flex items-center rounded-sm">
+                  <img src="images/{{$post->image_path}}" alt="{{$post->title}}">
+                  <div class="flex flex-col">
+                    <h5>{{$post->title}}</h5>
+                    <p class="truncate">{!!$post->content!!}</p>
+                  </div>
+                </div>
+              @endforeach
+          </div>
+        @endif
       </div>
 
       
@@ -49,7 +42,7 @@
             >
           </li>
           <li>
-            <a href="#" class="text-neutral-800 dark:text-neutral-200"
+            <a href="{{route('post.index')}}" class="text-neutral-800 dark:text-neutral-200"
               >Bolg</a
             >
           </li>

@@ -19,15 +19,19 @@
                     <span class="text-sm">Published on <time datetime="1667903925000">{{date("d M Y",$post->updated_at=null)}}</time><br><span style="margin-left: 100px"> At  <time datetime="1667903925000">{{date("H:m:i",$post->updated_at=null)}}</time></span></span>
                 </div>
                 <h2 class=" mb-2 text-2xl truncate font-bold tracking-tight text-gray-900 dark:text-white hover:underline" >
-                    <a href="/blog/top-10-scalable-angularjs-frameworks/">{{$post->title}}</a>
+                    <a href="post/{{$post->id}}">{{$post->title}}</a>
                 </h2>
-                <p class="truncate mb-5 text-gray-500 dark:text-gray-400">{{$post->content}}</p>
+                <p class="truncate mb-5 text-gray-500 dark:text-gray-400">{!!$post->content!!}</p>
                 <div class="md:flex-row flex items-center justify-between sm:flex flex-col">
-                    <span class="flex items-center space-x-2" href="/blog/author/harikrishna/">
-                        <img class="rounded-full w-7 h-7" src="/images/users_avatar/{{$post->user->avatar}}" alt="{{$post->user->avatar}}">
+                    <span class="flex items-center space-x-2" href="#">
+                        @if($post->user->avatar)
+                            <img class="rounded-full w-7 h-7" src="/images/users_avatar/{{$post->user->avatar}}" alt="{{$post->user->avatar}}">
+                        @else
+                            <h6 class="bg-blue-800 text-center py-1 px-2 text-gray-50 rounded-full ">{{Auth::user()->name[0]}}</h6> <!-- the string is considerd as an array in laravel, get the first string -->
+                        @endif
                         <span class="font-medium dark:text-white">{{$post->user->name}}</span>
                     </span>
-                    <a class="inline-flex items-center font-medium text-blue-600 hover:underline dark:text-blue-500" href="/blog/top-10-scalable-angularjs-frameworks/">Read more
+                    <a class="inline-flex items-center font-medium text-blue-600 hover:underline dark:text-blue-500" href="post/{{$post->id}}">Read more
                         <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                         </svg>

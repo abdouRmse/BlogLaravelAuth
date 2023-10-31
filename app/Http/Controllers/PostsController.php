@@ -16,7 +16,8 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view("posts.index",["posts" => $posts]);
+        $recent = Post::orderBy('id',"DESC")->limit(2)->get();
+        return view("posts.index",["posts" => $posts,'recent' => $recent]);
     }
 
     /**
@@ -70,7 +71,7 @@ class PostsController extends Controller
      */
     public function edit(string $id)
     {
-        return "edit";
+        return view("posts.edit",["post" => Post::findOrFail($id)]);
     }
 
     /**
@@ -78,7 +79,24 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            "image_post" => 'required|mimes:jpg,png,jped|max:5048'
+        ]);
+        $post = Post::findOrFail($id);
+        $newImagePathName = uniqid()."-".$post->slug.".".$request->image_post->extension();
+        $request->image_post->move(public_path("images"),$newImagePathName); // enregistre le file que est dans la $request dans le fichier puqlic "images" sou le nom de $newImagePathName
+        Post::where('id',$id)
+        ->update([
+            'title' => $request->input("title"),
+            'content' => $request->input("content"),
+            'slug' => Str::of($post->title)->slug('-'),
+            'image_path' => $newImagePathName,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->route('post.index');
     }
 
     /**
@@ -86,6 +104,7 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        return "destroy";
+        Post::where('id',$id)->delete();
+        return redirect()->route('post.index');
     }
 }

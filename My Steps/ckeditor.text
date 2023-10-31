@@ -1,0 +1,46 @@
+HOW TO ADD THE MEDIA IMAGE UPLOADER ?
+
+step0: add the cdn file of ckeditor5 in the layouts.app 
+
+step1: add the script file "view.editor.ckeditor"  and make this code to create the ckeditor 
+        and change the configuration to enable the upload file:
+
+        @section ('scripts')
+        <script>
+            
+            ClassicEditor
+                .create( document.querySelector( '#editor' ),{
+                    ckfinder:{
+                        uploadUrl:"{{route('ckeditor.upload',['_token'=>csrf_token()])}}"
+                    }
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
+        </script>
+        @endsection
+
+step2: include the script in the file where i want to use ckeditor with the include
+
+step3: php artisan make: controller ImagesController
+
+step4: insede ImagesController:
+    create a method name 'upload'  :
+    public function upload(Request $request){
+        if($request->hasFile('upload')){
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName,PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName.'_'.time().'.'.$extension;
+            $request->file('upload')->move(public_path('media'),$fileName);
+            $url = asset('media/'.$fileName);
+            return response()->json(['fileName'=>$fileName,'uploaded'=>1,'url'=>$url]);
+        }
+    }
+
+step5: give the textarea id='editor'
+
+step6: add the ckaditor create:
+
+step7: in the public file make a dir 'media'
+

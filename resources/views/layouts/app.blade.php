@@ -19,6 +19,8 @@
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="bg-red-300 dark:bg-gray-900">
@@ -37,5 +39,7 @@
         </div>
         @yield('content')
         @include('layouts.footer')
+        
+        @yield('scripts')
     </body>
 </html>

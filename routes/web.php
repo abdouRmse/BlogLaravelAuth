@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Post;
@@ -16,13 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard',["posts" => Post::orderBy('id', 'desc')->take(1)->get()]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::name('dashboard')->group(function(){
+    Route::get('/', function () {
+        return view('dashboard',["posts" => Post::orderBy('id', 'desc')->take(10)->get(),
+                                 "recent" => Post::orderBy('id',"DESC")->limit(4)->get()   
+                    ]);
+    });
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard',["posts" => Post::orderBy('id', 'desc')->take(10)->get(),
+                                "recent" => Post::orderBy('id',"DESC")->limit(4)->get()   
+                    ]);
+    });
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard',["posts" => Post::orderBy('id', 'desc')->take(1)->get()]);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,8 +41,11 @@ Route::middleware('auth')->group(function () {
 Route::resource("/post",PostsController::class, [
     'names' => [
         'index' => 'post.index',
-        'store' => 'post.store'
+        'store' => 'post.store',
+        'update' => 'post.update'
     ]
-])->middleware(['auth', 'verified']);
+])/*->middleware(['auth', 'verified'])*/;
+
+Route::post('/upload',[ImagesController::class, 'upload'])->name('ckeditor.upload');
 
 require __DIR__.'/auth.php';

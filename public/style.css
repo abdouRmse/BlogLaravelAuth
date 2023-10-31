@@ -32,3 +32,49 @@
 .cost-head a{
     margin-left:80px;
 }
+
+input {
+    color: green;
+}
+
+.footer-posts{
+    padding: 10px;
+}
+
+.footer-post{
+    margin: 20px;
+    padding-left: 20px;
+    width:350px;
+}
+
+.footer-post>div{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 65%;
+}
+.footer-post>div>h5{
+    font-size: medium;
+}
+.footer-post>div>p{
+    font-size: x-small;
+}
+
+.footer-post img{
+    height: 95px;
+    width: 182px;
+}
+
+.div-content{
+    height: 100px;
+    width:100%;
+    background-color: yellow;
+    padding: 10px;
+}
+
+.div-content *{
+    display:none;
+}
+
+.div-content>:first-child{
+    display: block;
+}
